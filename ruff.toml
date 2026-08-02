@@ -1,0 +1,32 @@
+# PEP 8 configuration for scraper/, src/, utils/ and notebooks/.
+# Driven by the Makefile: `make lint`, `make format`, `make quality`.
+
+line-length = 79            # PEP 8 hard limit; raise to 88/100 if too noisy
+target-version = "py313"
+extend-include = ["*.ipynb"]  # lint notebooks cell by cell
+
+[lint]
+select = [
+    "E",  # pycodestyle errors   - the core PEP 8 rules
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes             - unused imports and variables
+    "I",  # isort                - PEP 8 import ordering
+    "N",  # pep8-naming          - PEP 8 naming conventions
+]
+
+# Rules that are still REPORTED by `make lint`, but that `make format` is not
+# allowed to auto-fix, because their fix deletes code. In exploratory and
+# notebook work you routinely write an import or an assignment before you use
+# it; letting --fix strip those empties the file.
+unfixable = [
+    "F401",  # unused import        -> deletes the import line
+    "F811",  # redefined-while-unused -> deletes the earlier definition
+    "F841",  # unused local variable  -> deletes the assignment
+]
+
+[lint.per-file-ignores]
+# Notebooks legitimately import after prose and setup cells.
+"*.ipynb" = ["E402"]
+
+[format]
+docstring-code-format = true

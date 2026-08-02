@@ -1,0 +1,6 @@
+# Linting and formatting tooling. Install with: make install-dev
+#
+# ruff replaces pycodestyle, pyflakes, isort and pep8-naming, and lints
+# Jupyter notebooks cell by cell. 0.6 is the floor at which .ipynb support
+# is enabled by default.
+ruff>=0.6

@@ -65,10 +65,13 @@ OPERATION ?= arriendo
 CITY      ?= bogota
 PAGES     ?=
 STAGE     ?= all
+# Each operation/city needs its own directory: the pipeline refuses to
+# mix two queries' artifacts, so sharing ./out would fail on the guard.
+OUT       ?= ./out-$(OPERATION)-$(CITY)
 
 scrape: ## run the complete FincaRaiz pipeline (stages 0-6)
 	$(PYTHON) -m scraper run --stage $(STAGE) --operation $(OPERATION) \
-		--city $(CITY) $(if $(PAGES),--pages $(PAGES),)
+		--city $(CITY) --out $(OUT) $(if $(PAGES),--pages $(PAGES),)
 
 scrape-venta: ## same pipeline for sale listings
 	$(MAKE) scrape OPERATION=venta

@@ -1,4 +1,5 @@
-*.cvs
+*.csv
+out-venta-bogota
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -181,3 +182,9 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# Scraper pipeline artifacts (raw HTML cache, intermediate jsonl,
+# checkpoints and the consolidated datasets). Regenerable via `make scrape`,
+# and the raw cache alone runs to hundreds of MB.
+out/
+out-*/

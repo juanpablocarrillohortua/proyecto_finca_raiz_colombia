@@ -2,7 +2,9 @@
 # Install with:  pip install -r requirements.txt
 # Lint tooling lives separately in requirements/dev.txt
 
-httpx[http2]>=0.27
+# brotli extra: the site serves br-encoded HTML. Without a brotli codec
+# httpx cannot decode it and every selector silently misses.
+httpx[http2,brotli]>=0.27
 selectolax>=0.3.21
 pydantic>=2.7
 pydantic-settings>=2.3

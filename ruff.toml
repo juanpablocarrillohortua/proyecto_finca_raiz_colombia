@@ -25,8 +25,12 @@ unfixable = [
 ]
 
 [lint.per-file-ignores]
-# Notebooks legitimately import after prose and setup cells.
-"*.ipynb" = ["E402"]
+# E402: notebooks legitimately import after prose and setup cells.
+# F401: an EDA notebook imports its whole toolkit in the first cell
+#       (numpy, matplotlib, seaborn) and reaches for it several cells
+#       later, so "unused import" is noise here rather than a defect.
+#       Still enforced everywhere else.
+"*.ipynb" = ["E402", "F401"]
 
 [format]
 docstring-code-format = true

@@ -128,8 +128,9 @@ analysis.
   Model the disclosure mechanism rather than zero-filling.
 - **`bedrooms`, not `rooms`.** The site's `rooms` field was 0 on 12 of 21 sampled
   listings while `bedrooms` held the real value.
-- **Check `price_currency_is_foreign`** before pooling prices; not every listing
-  is quoted in COP.
+- **Not every listing is quoted in COP.** Check before pooling prices — via
+  `price_currency_is_foreign` in the JSON artifact, or `price_currency` in the
+  CSV, which does not carry that flag.
 - **Contact details are never collected**, by design — see [REVIEW_TOS.md](REVIEW_TOS.md)
   before scaling up a run or changing city. The scraper halts on a block rather
   than evading it; do not add captcha solving, IP rotation or header spoofing.
@@ -152,7 +153,10 @@ global matplotlib state and callers pass no styling arguments. Public surface is
 `run_normality_test`. Add plots as methods there rather than starting a second
 plotting module. [utils/triple_plot.py](utils/triple_plot.py) holds the
 standalone `normality_report` panel; [utils/geo.py](utils/geo.py) holds the
-Cundinamarca bounding-box coordinate sanity check.
+Cundinamarca bounding-box coordinate sanity check; [utils/map_graph.py](utils/map_graph.py)
+holds `create_map`, a Folium marker-cluster map (one marker per row, so filter
+before calling it on all 31k listings). [utils/README.md](utils/README.md)
+documents all four.
 
 Notebooks run from `notebooks/`, so they prepend the parent directory to
 `sys.path` before `from utils... import ...`. Figure text is Spanish (the
@@ -175,9 +179,9 @@ reader's language); code, docstrings and diagnostics are English.
   cause friction; raise it in `ruff.toml` if it fights the analysis code.
 - Notebooks are linted cell by cell (`notebooks/x.ipynb:cell 2:1:1`, markdown
   cells counted); `E402` and `F401` are ignored there only.
-- **`requirements.txt` is UTF-16-LE with a BOM** (written by a PowerShell
-  redirect) and is incomplete: `matplotlib`, `statsmodels` and `missingno` are
-  imported by `utils/` and the notebook but not listed. They are installed in
-  the venv, so a fresh clone will break before this repo does — regenerate the
-  file as UTF-8 if you touch it.
+- **`requirements.txt` must stay UTF-8.** It was UTF-16-LE with a BOM until
+  2026-08-07 (a PowerShell `>` redirect wrote it that way) and was missing the
+  analysis imports; it is now a plain `pip freeze` covering the scraper *and*
+  `utils/`/notebooks. Regenerate it with
+  `.venv/Scripts/python.exe -m pip freeze`, never with a shell redirect.
 - Commit messages follow `type(scope): summary` (`feat(scraper):`, `chore(notebooks):`, `eda:`).

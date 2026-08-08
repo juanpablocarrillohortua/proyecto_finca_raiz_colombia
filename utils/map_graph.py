@@ -28,13 +28,14 @@ def create_map(df, latitude_col="latitude", longitude_col="longitude"):
             clean_df[longitude_col].mean(),
         ],
         zoom_start=11,
+        tiles="OpenStreetMap",
     )
 
     # create a marker cluster
     marker_cluster = MarkerCluster().add_to(mapa)
 
     # add the points to the cluster instead of directly to the map
-    for _, row in df.iterrows():
+    for _, row in clean_df.iterrows():
         folium.Marker(
             location=[row[latitude_col], row[longitude_col]],
             popup=f"Lat: {row[latitude_col]}, Lon: {row[longitude_col]}",

@@ -44,6 +44,16 @@ def inside_bbox_mask(
         bbox.lon_min, bbox.lon_max
     )
 
+def single_bbox_inside(
+        lat: int,
+        lon:int,
+        bbox: BBox
+        ) -> bool:
+
+    """Check a single one coordinate"""
+
+    return (bbox.lat_min < lat < bbox.lat_max) and (bbox.lon_min < lon < bbox.lon_max)
+
 
 def outside_bbox_mask(
     lat: pd.Series,

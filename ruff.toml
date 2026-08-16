@@ -34,3 +34,9 @@ unfixable = [
 
 [format]
 docstring-code-format = true
+
+[lint.pep8-naming]
+ignore-names = [
+    "X",
+    "X_with_const"
+    ]

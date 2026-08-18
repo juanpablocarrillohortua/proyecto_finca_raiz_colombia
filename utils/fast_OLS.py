@@ -1,3 +1,4 @@
+# ruff: noqa: N999
 """Diagnóstico de modelos OLS (statsmodels) encapsulado en una clase."""
 
 from __future__ import annotations
@@ -30,16 +31,41 @@ class DiagnosticoOLS:
     # ------------------------------------------------------------------
     # Coeficientes
     # ------------------------------------------------------------------
-    def tabla_coeficientes(self, alpha=0.05, mostrar=True):
+    def tabla_coeficientes(self, alpha=0.05, hc3=False, mostrar=True):
+        """Tabla de coeficientes.
+
+        Si `hc3=True` agrega, junto a los resultados clásicos, los errores
+        estándar, t, p-valores e intervalos robustos a heterocedasticidad
+        (HC3).
+        """
         ci = self.modelo.conf_int(alpha=alpha)
-        self.coeficientes = pd.DataFrame({
-            "coeficiente": self.modelo.params,
-            "error_estandar": self.modelo.bse,
-            "t": self.modelo.tvalues,
-            "p_valor": self.modelo.pvalues,
-            "ci_lower": ci[0],
-            "ci_upper": ci[1]
-        })
+        self.coeficientes = pd.DataFrame(
+            {
+                "coeficiente": self.modelo.params,
+                "error_estandar": self.modelo.bse,
+                "t": self.modelo.tvalues,
+                "p_valor": self.modelo.pvalues,
+                "ci_lower": ci[0],
+                "ci_upper": ci[1],
+            }
+        )
+
+        if hc3:
+            indice = self.modelo.params.index
+            robusto = self.modelo.get_robustcov_results(cov_type="HC3")
+            ci_hc3 = pd.DataFrame(robusto.conf_int(alpha=alpha), index=indice)
+
+            self.coeficientes["error_estandar_hc3"] = pd.Series(
+                robusto.bse, index=indice
+            )
+            self.coeficientes["t_hc3"] = pd.Series(
+                robusto.tvalues, index=indice
+            )
+            self.coeficientes["p_valor_hc3"] = pd.Series(
+                robusto.pvalues, index=indice
+            )
+            self.coeficientes["ci_lower_hc3"] = ci_hc3[0]
+            self.coeficientes["ci_upper_hc3"] = ci_hc3[1]
 
         if mostrar:
             with pd.option_context("display.float_format", "{:.6f}".format):
@@ -47,11 +73,18 @@ class DiagnosticoOLS:
 
         return self.coeficientes
 
-    def coeficientes_significativos(self, alpha=0.05, mostrar=True):
-        if self.coeficientes is None:
-            self.tabla_coeficientes(mostrar=False)
+    def coeficientes_significativos(self, alpha=0.05, hc3=False, mostrar=True):
+        """Filtra por p-valor clásico o, si `hc3=True`, por el p-valor HC3.
 
-        significativos = self.coeficientes[self.coeficientes['p_valor'] < alpha]
+        En ambos casos la tabla mostrada conserva las columnas robustas y no
+        robustas; lo único que cambia es la columna usada para filtrar.
+        """
+        columna = "p_valor_hc3" if hc3 else "p_valor"
+
+        if self.coeficientes is None or columna not in self.coeficientes:
+            self.tabla_coeficientes(alpha=alpha, hc3=hc3, mostrar=False)
+
+        significativos = self.coeficientes[self.coeficientes[columna] < alpha]
 
         if mostrar:
             with pd.option_context("display.float_format", "{:.6f}".format):
@@ -107,32 +140,34 @@ class DiagnosticoOLS:
         reset = linear_reset(self.modelo, power=2, use_f=True)
         dw = durbin_watson(self.modelo.resid)
 
-        self.resultados_pruebas = pd.DataFrame({
-            "prueba": [
-                "Jarque-Bera",
-                "Breusch-Pagan",
-                "Ramsey RESET",
-                "Durbin-Watson",
-            ],
-            "estadistico": [
-                jb_stat,
-                bp_lm,
-                float(reset.fvalue),
-                dw,
-            ],
-            "p_valor": [
-                jb_p,
-                bp_lm_p,
-                float(reset.pvalue),
-                np.nan,
-            ],
-            "H0": [
-                "normalidad",
-                "homocedasticidad",
-                "forma funcional adecuada",
-                "sin autocorrelación de orden 1, lectura heurística",
-            ],
-        })
+        self.resultados_pruebas = pd.DataFrame(
+            {
+                "prueba": [
+                    "Jarque-Bera",
+                    "Breusch-Pagan",
+                    "Ramsey RESET",
+                    "Durbin-Watson",
+                ],
+                "estadistico": [
+                    jb_stat,
+                    bp_lm,
+                    float(reset.fvalue),
+                    dw,
+                ],
+                "p_valor": [
+                    jb_p,
+                    bp_lm_p,
+                    float(reset.pvalue),
+                    np.nan,
+                ],
+                "H0": [
+                    "normalidad",
+                    "homocedasticidad",
+                    "forma funcional adecuada",
+                    "sin autocorrelación de orden 1, lectura heurística",
+                ],
+            }
+        )
 
         if mostrar:
             display(self.resultados_pruebas.round(5))
@@ -142,8 +177,8 @@ class DiagnosticoOLS:
     @staticmethod
     def decision(nombre, p, texto_rechazo, texto_no_rechazo, alpha=0.05):
         if p < alpha:
-            return f"{nombre}: se rechaza H0 al {100*alpha:.0f} %. {texto_rechazo}"
-        return f"{nombre}: no se rechaza H0 al {100*alpha:.0f} %. {texto_no_rechazo}"
+            return f"{nombre}: se rechaza H0 al {100 * alpha:.0f} %. {texto_rechazo}"  # noqa: E501
+        return f"{nombre}: no se rechaza H0 al {100 * alpha:.0f} %. {texto_no_rechazo}"  # noqa: E501
 
     def decisiones(self, alpha=0.05, mostrar=True):
         """Aplica `decision` sobre la tabla que produce `pruebas_hipotesis`."""
@@ -179,7 +214,9 @@ class DiagnosticoOLS:
 
             texto_rechazo, texto_no_rechazo = textos[nombre]
             lineas.append(
-                self.decision(nombre, p, texto_rechazo, texto_no_rechazo, alpha)
+                self.decision(
+                    nombre, p, texto_rechazo, texto_no_rechazo, alpha
+                )
             )
 
         if mostrar:
@@ -198,9 +235,9 @@ class DiagnosticoOLS:
         # 2. Extraer dataframe con métricas
         self.df_influencia = pd.DataFrame(
             {
-                'resid_studentized_internal': influence.resid_studentized_internal,
-                'hat_diag': influence.hat_matrix_diag,
-                'cook_d': influence.cooks_distance[
+                "resid_studentized_internal": influence.resid_studentized_internal,  # noqa: E501
+                "hat_diag": influence.hat_matrix_diag,
+                "cook_d": influence.cooks_distance[
                     0
                 ],  # cooks_distance retorna una tupla (distancia, p-valor)
             }
@@ -208,7 +245,9 @@ class DiagnosticoOLS:
 
         # 3. Definir Umbrales de Criterio
         n = len(self.modelo.model.endog)  # Número de observaciones
-        k = len(self.modelo.params)  # Número de parámetros (incluyendo intercepto)
+        k = len(
+            self.modelo.params
+        )  # Número de parámetros (incluyendo intercepto)
 
         # Umbrales estándar
         criterio_student = 2.0  # |Residuo Estudiantizado| > 2 (outliers en Y)
@@ -217,23 +256,26 @@ class DiagnosticoOLS:
 
         # 4. Filtrar observaciones atípicas e influyentes
         outliers_y = self.df_influencia[
-            np.abs(self.df_influencia['resid_studentized_internal']) > criterio_student
+            np.abs(self.df_influencia["resid_studentized_internal"])
+            > criterio_student
         ]
         outliers_x = self.df_influencia[
-            self.df_influencia['hat_diag'] > criterio_leverage
+            self.df_influencia["hat_diag"] > criterio_leverage
         ]
         influyentes_cook = self.df_influencia[
-            self.df_influencia['cook_d'] > criterio_cook
+            self.df_influencia["cook_d"] > criterio_cook
         ]
 
-        print(f'Observaciones con residuos atípicos (|student| > 2): {len(outliers_y)}')
         print(
-            f'Observaciones con alto leverage (hat > {criterio_leverage:.3f}):'
-            f' {len(outliers_x)}'
+            f"Observaciones con residuos atípicos (|student| > 2): {len(outliers_y)}"  # noqa: E501
         )
         print(
-            f'Observaciones influyentes (Cook D > {criterio_cook:.3f}):'
-            f' {len(influyentes_cook)}'
+            f"Observaciones con alto leverage (hat > {criterio_leverage:.3f}):"
+            f" {len(outliers_x)}"
+        )
+        print(
+            f"Observaciones influyentes (Cook D > {criterio_cook:.3f}):"
+            f" {len(influyentes_cook)}"
         )
 
         return self.df_influencia, outliers_y, outliers_x, influyentes_cook
@@ -242,7 +284,8 @@ class DiagnosticoOLS:
         """DataFrame con métricas de influencia + gráfico interactivo.
 
         Retorna:
-            diag          : df original + apalancamiento, residual_estudentizado, cook, revisar
+            diag          : df original + apalancamiento,
+                            residual_estudentizado, cook, revisar
             mask_cook     : cook > 4/n
             mask_revisar  : cook, apalancamiento o |residual| fuera de umbral
         """
@@ -252,44 +295,49 @@ class DiagnosticoOLS:
         umbral_h, umbral_cook = 2 * p / n, 4 / n
 
         diag = df.copy()
-        diag['apalancamiento'] = influencia.hat_matrix_diag
-        diag['residual_estudentizado'] = influencia.resid_studentized_internal
-        diag['cook'] = influencia.cooks_distance[0]
+        diag["apalancamiento"] = influencia.hat_matrix_diag
+        diag["residual_estudentizado"] = influencia.resid_studentized_internal
+        diag["cook"] = influencia.cooks_distance[0]
 
-        mask_cook = diag['cook'] > umbral_cook
+        mask_cook = diag["cook"] > umbral_cook
         mask_revisar = (
             mask_cook
-            | (diag['apalancamiento'] > umbral_h)
-            | (diag['residual_estudentizado'].abs() > 2)
+            | (diag["apalancamiento"] > umbral_h)
+            | (diag["residual_estudentizado"].abs() > 2)
         )
-        diag['revisar'] = mask_revisar
+        diag["revisar"] = mask_revisar
 
-        etiqueta = diag.index.name or 'índice'
+        etiqueta = diag.index.name or "índice"
 
         fig = px.scatter(
             diag,
-            x='apalancamiento',
-            y='residual_estudentizado',
-            size=diag['cook'] + diag['cook'].max() * 0.05,  # evita puntos invisibles
-            color='revisar',
-            hover_name=[f'{etiqueta}: {i}' for i in diag.index],
+            x="apalancamiento",
+            y="residual_estudentizado",
+            size=diag["cook"]
+            + diag["cook"].max() * 0.05,  # evita puntos invisibles
+            color="revisar",
+            hover_name=[f"{etiqueta}: {i}" for i in diag.index],
             hover_data={
-                'apalancamiento': ':.4f',
-                'residual_estudentizado': ':.3f',
-                'cook': ':.4f',
+                "apalancamiento": ":.4f",
+                "residual_estudentizado": ":.3f",
+                "cook": ":.4f",
             },
             labels={
-                'apalancamiento': 'Apalancamiento',
-                'residual_estudentizado': 'Residual Estudentizado',
-                'cook': 'Distancia de Cook',
+                "apalancamiento": "Apalancamiento",
+                "residual_estudentizado": "Residual Estudentizado",
+                "cook": "Distancia de Cook",
             },
-            title='Diagnóstico de Influencia',
+            title="Diagnóstico de Influencia",
             opacity=0.7,
         )
-        fig.add_vline(x=umbral_h, line_dash='dash', line_color='red',
-                      annotation_text=f'h = {umbral_h:.3f}')
-        fig.add_hline(y=2, line_dash='dash', line_color='gray')
-        fig.add_hline(y=-2, line_dash='dash', line_color='gray')
+        fig.add_vline(
+            x=umbral_h,
+            line_dash="dash",
+            line_color="red",
+            annotation_text=f"h = {umbral_h:.3f}",
+        )
+        fig.add_hline(y=2, line_dash="dash", line_color="gray")
+        fig.add_hline(y=-2, line_dash="dash", line_color="gray")
         fig.show()
 
         return diag, mask_cook, mask_revisar
@@ -297,9 +345,9 @@ class DiagnosticoOLS:
     # ------------------------------------------------------------------
     # Corrida completa
     # ------------------------------------------------------------------
-    def reporte_completo(self, df=None, alpha=0.05):
-        self.tabla_coeficientes(alpha=alpha)
-        self.coeficientes_significativos(alpha=alpha)
+    def reporte_completo(self, df=None, alpha=0.05, hc3=False):
+        self.tabla_coeficientes(alpha=alpha, hc3=hc3)
+        self.coeficientes_significativos(alpha=alpha, hc3=hc3)
         self.bondad_ajuste()
         self.prueba_f_global()
         self.error_estandar_residual()

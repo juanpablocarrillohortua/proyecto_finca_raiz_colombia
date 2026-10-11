@@ -38,5 +38,28 @@ docstring-code-format = true
 [lint.pep8-naming]
 ignore-names = [
     "X",
-    "X_with_const"
+    "X_with_const",
+    # Multivariate-inference names in notebooks/joint_distributions.ipynb,
+    # kept as in the formulas they implement (Sigma, T^2, S_pooled, ...).
+    "Sigma",
+    "Sigma_inv",
+    "D",
+    "D2",
+    "D_punto",
+    "D2_punto",
+    "T",
+    "T2",
+    "T2_test",
+    "T2_diff",
+    "T2_pooled",
+    "F_stat",
+    "F_stat_diff",
+    "F_stat_pooled",
+    "S_diff",
+    "S_diff_inv",
+    "S_pooled",
+    "S_pooled_scaled",
+    "Z",
+    "A1",
+    "A2",
     ]

@@ -1,0 +1,371 @@
+positive_landmarks:
+  "Centro Comercial Hacienda Santa Bárbara":
+    latitude: 4.6934
+    longitude: -74.0328
+  "Unicentro Bogotá":
+    latitude: 4.7013
+    longitude: -74.0416
+  "Parque Fundacional de Usaquén":
+    latitude: 4.6971
+    longitude: -74.0305
+  "Parque Cedro Golf":
+    latitude: 4.7275
+    longitude: -74.0310
+  "Parque El Virrey":
+    latitude: 4.6738
+    longitude: -74.0531
+  "Parque de la 93":
+    latitude: 4.6768
+    longitude: -74.0482
+  "Centro Comercial Santafé":
+    latitude: 4.7622
+    longitude: -74.0464
+  "Al Agua Patos (Calle 104)":
+    latitude: 4.6905
+    longitude: -74.0506
+  "McDonald's Calle 127":
+    latitude: 4.7055
+    longitude: -74.0532
+  "Zona G / Quinta Camacho":
+    latitude: 4.6534
+    longitude: -74.0551
+  "Centro Comercial Andino":
+    latitude: 4.6668
+    longitude: -74.0526
+  "Monserrate":
+    latitude: 4.6056
+    longitude: -74.0555
+  "Parque de la Independencia / Planetario":
+    latitude: 4.6131
+    longitude: -74.0683
+  "Parque Metropolitano San Cristóbal":
+    latitude: 4.5721
+    longitude: -74.0850
+  "Parque Entrenubes (Acceso San Cristóbal)":
+    latitude: 4.5510
+    longitude: -74.0790
+  "Parque Arqueológico San Jorge":
+    latitude: 4.4720
+    longitude: -74.1180
+  "Parque Cantarrana":
+    latitude: 4.5015
+    longitude: -74.1120
+  "Plaza Fundacional de Usme Centro":
+    latitude: 4.4690
+    longitude: -74.1110
+  "Reserva Forestal Aguarutos":
+    latitude: 4.4510
+    longitude: -74.1020
+  "Parque El Tunal":
+    latitude: 4.5710
+    longitude: -74.1340
+  "Centro Comercial Ciudad Tunal":
+    latitude: 4.5740
+    longitude: -74.1320
+  "Parque Metropolitano El Porvenir":
+    latitude: 4.6310
+    longitude: -74.1880
+  "Plaza Fundacional de Bosa":
+    latitude: 4.6180
+    longitude: -74.1890
+  "Parque Castilla":
+    latitude: 4.6460
+    longitude: -74.1420
+  "Centro Comercial Plaza de las Américas":
+    latitude: 4.6200
+    longitude: -74.1380
+  "Parque Fundacional de Fontibón":
+    latitude: 4.6730
+    longitude: -74.1440
+  "Centro Comercial Salitre Plaza":
+    latitude: 4.6550
+    longitude: -74.1100
+  "Jardín Botánico José Celestino Mutis":
+    latitude: 4.6680
+    longitude: -74.1000
+  "Centro Comercial Titán Plaza":
+    latitude: 4.6960
+    longitude: -74.0860
+  "Parque Mirador de los Nevados":
+    latitude: 4.7431
+    longitude: -74.0848
+  "Plaza Imperial Centro Comercial":
+    latitude: 4.7482
+    longitude: -74.0963
+  "Parque La Colina Centro Comercial":
+    latitude: 4.7330
+    longitude: -74.0573
+  "Humedal Tibabuyes (Juan Amarillo)":
+    latitude: 4.7214
+    longitude: -74.1030
+  "Parque Metropolitano Simón Bolívar (Sector Norte)":
+    latitude: 4.6580
+    longitude: -74.0930
+  "Centro Comercial Metrópolis":
+    latitude: 4.6830
+    longitude: -74.0840
+  "Parque Metropolitano Simón Bolívar (Sector Sur)":
+    latitude: 4.6560
+    longitude: -74.0920
+  "Centro Comercial Gran Estación":
+    latitude: 4.6470
+    longitude: -74.1010
+  "Plaza de España / Parque La Pepita":
+    latitude: 4.6060
+    longitude: -74.0840
+  "Centro Comercial Mallplaza NQS":
+    latitude: 4.6180
+    longitude: -74.0860
+  "Parque Ciudad Montes (Borde Nariño)":
+    latitude: 4.5980
+    longitude: -74.1030
+  "Centro Comercial Centro Mayor":
+    latitude: 4.5920
+    longitude: -74.1220
+  "Parque Ciudad Montes":
+    latitude: 4.6080
+    longitude: -74.1110
+  "Plaza de Mercado Paloquemao":
+    latitude: 4.6163
+    longitude: -74.0898
+  "Plaza de Bolívar":
+    latitude: 4.5981
+    longitude: -74.0760
+  "Chorro de Quevedo":
+    latitude: 4.5970
+    longitude: -74.0700
+  "Parque Entrenubes (Acceso RUU)":
+    latitude: 4.5380
+    longitude: -74.1010
+  "Parque Zonal Quiroga":
+    latitude: 4.5760
+    longitude: -74.1150
+  "Parque Mirador Paraíso (TransMiCable)":
+    latitude: 4.5621
+    longitude: -74.1528
+  "Parque Metropolitano El Ensueño":
+    latitude: 4.5880
+    longitude: -74.1610
+  "Centro Comercial Gran Plaza Ensueño":
+    latitude: 4.5931
+    longitude: -74.1702
+  "SuperCADE Manitas":
+    latitude: 4.5580
+    longitude: -74.1560
+  "Parque Nacional Natural Sumapaz (Laguna Chisacá)":
+    latitude: 4.2880
+    longitude: -74.1820
+  "Centro Poblado San Juan de Sumapaz":
+    latitude: 4.0250
+    longitude: -74.3120
+  # Chía
+  "Centro Comercial Fontanar":
+    latitude: 4.8841
+    longitude: -74.0351
+  "Parque Santander (Parque Principal de Chía)":
+    latitude: 4.8613
+    longitude: -74.0602
+  # Cajicá
+  "Parque Principal de Cajicá":
+    latitude: 4.9173
+    longitude: -74.0255
+  "Estación del Tren de Cajicá / Parque La Estación":
+    latitude: 4.9167
+    longitude: -74.0231
+  # Zipaquirá
+  "Catedral de Sal de Zipaquirá":
+    latitude: 5.0187
+    longitude: -74.0103
+  "Centro Comercial Megacity":
+    latitude: 5.0263
+    longitude: -73.9920
+  # Soacha
+  "Centro Comercial Unisur":
+    latitude: 4.5843
+    longitude: -74.2062
+  "Jardín Centro Comercial (Ciudad Verde)":
+    latitude: 4.6059
+    longitude: -74.2229
+
+negative_landmarks:
+  "Cementerio Jardines del Recuerdo":
+    latitude: 4.7863
+    longitude: -74.0462
+  "Canteras y Zonas de Extracción El Codito":
+    latitude: 4.7490
+    longitude: -74.0150
+  "Estación de Transferencia de Basuras Usaquén":
+    latitude: 4.7380
+    longitude: -74.0420
+  "Franja de Inestabilidad Calle 163 Este":
+    latitude: 4.7410
+    longitude: -74.0210
+  "Cementerio Central":
+    latitude: 4.6174
+    longitude: -74.0759
+  "Cárcel Distrital de Bogotá":
+    latitude: 4.5860
+    longitude: -74.0852
+  "Sector Quebrada La Vieja - Borde Este":
+    latitude: 4.6490
+    longitude: -74.0460
+  "Centro de Detención Sub-estación Chapinero":
+    latitude: 4.6465
+    longitude: -74.0620
+  "Zona de Tolerancia / San Bernardo Norte":
+    latitude: 4.5985
+    longitude: -74.0812
+  "Canal San Francisco / Av. Comuneros":
+    latitude: 4.5940
+    longitude: -74.0750
+  "Canteras del Río Fucha":
+    latitude: 4.5610
+    longitude: -74.0720
+  "Sector Altamira / La Gloria (Borde Inestable)":
+    latitude: 4.5420
+    longitude: -74.0810
+  "Relleno Sanitario Doña Juana":
+    latitude: 4.4981
+    longitude: -74.1235
+  "Ladrilleras del Valle de Yomasa":
+    latitude: 4.5120
+    longitude: -74.1080
+  "Cuenca Alta del Río Tunjuelo (Zona Inundación)":
+    latitude: 4.4810
+    longitude: -74.1150
+  "Sector Monteblanco (Inestabilidad de Ladera)":
+    latitude: 4.5080
+    longitude: -74.1190
+  "Centro de Reclusión Juvenil El Redentor":
+    latitude: 4.5768
+    longitude: -74.1451
+  "Sector Curtimbres San Benito":
+    latitude: 4.5820
+    longitude: -74.1410
+  "Cementerio del Sur":
+    latitude: 4.5900
+    longitude: -74.1179
+  "Ronda del Río Tunjuelo (Bosa San José)":
+    latitude: 4.6120
+    longitude: -74.1980
+  "Corabastos (Central Mayorista)":
+    latitude: 4.6300
+    longitude: -74.1560
+  "PTAR Cañaveralejo (Planta de Aguas Residuales)":
+    latitude: 4.6452
+    longitude: -74.1980
+  "Aeropuerto Internacional El Dorado (Cono de Ruido)":
+    latitude: 4.7010
+    longitude: -74.1460
+  "Zona Industrial HB / Cofradía":
+    latitude: 4.6780
+    longitude: -74.1380
+  "PTAR El Salitre (Planta de Aguas Residuales)":
+    latitude: 4.7320
+    longitude: -74.1224
+  "Humedal Jaboque (Tercio Bajo con Vertimientos)":
+    latitude: 4.7180
+    longitude: -74.1320
+  "Complejo Penitenciario La Picota":
+    latitude: 4.5492
+    longitude: -74.1177
+  "Planta Concretera Torca (Calle 240)":
+    latitude: 4.8012
+    longitude: -74.0321
+  "Corredor Industrial Mazurén Oeste":
+    latitude: 4.7450
+    longitude: -74.0510
+  "Canal Salitre Tramo Occidental":
+    latitude: 4.7081
+    longitude: -74.0950
+  "Cárcel de Mujeres El Buen Pastor":
+    latitude: 4.6703
+    longitude: -74.0741
+  "Zona Industrial 12 de Octubre":
+    latitude: 4.6650
+    longitude: -74.0770
+  "Corredor Obras Metro Av. Caracas con Cll 45":
+    latitude: 4.6340
+    longitude: -74.0680
+  "Canal Arzobispo (Tramo Campín)":
+    latitude: 4.6490
+    longitude: -74.0780
+  "Sector El Samber / Cinco Esquinas":
+    latitude: 4.6010
+    longitude: -74.0830
+  "Chatarrerías e Industrias Pesadas Calle 13":
+    latitude: 4.6120
+    longitude: -74.0880
+  "Imprentas y Talleres del Restrepo":
+    latitude: 4.5880
+    longitude: -74.1080
+  "Canal Albina (Tramos Descubiertos)":
+    latitude: 4.5910
+    longitude: -74.1010
+  "Cárcel La Modelo":
+    latitude: 4.6295
+    longitude: -74.1062
+  "Zona Industrial Arandina (Calle 13 con 42)":
+    latitude: 4.6310
+    longitude: -74.1000
+  "Eje de la Carrera 10ma (Borde Sur Candelaria)":
+    latitude: 4.5940
+    longitude: -74.0780
+  "Borde de Ladera Este (Paseo Bolívar Alto)":
+    latitude: 4.5990
+    longitude: -74.0670
+  "Ladrilleras Molinos":
+    latitude: 4.5320
+    longitude: -74.1120
+  "Talud de Inestabilidad Barrio Diana Turbay":
+    latitude: 4.5410
+    longitude: -74.1050
+  "Cantera El Mochuelo":
+    latitude: 4.5310
+    longitude: -74.1380
+  "Sector Caracolí (Borde Ladera)":
+    latitude: 4.5510
+    longitude: -74.1690
+  "Botadero Ilegal Meissen (Borde Tunjuelo)":
+    latitude: 4.5710
+    longitude: -74.1410
+  "Zona Industrial Cazucá (Borde Sur)":
+    latitude: 4.5880
+    longitude: -74.1820
+  "Zonas de Erosión Avanzada Cuenca Blanco":
+    latitude: 4.1150
+    longitude: -74.2500
+  "Punto de Inestabilidad Vial Vereda Nazareth":
+    latitude: 4.1820
+    longitude: -74.2150
+  # Chía
+  "PTAR Chía (Planta de Aguas Residuales)":
+    latitude: 4.8610
+    longitude: -74.0392
+  "Cementerio de Chía":
+    latitude: 4.8656
+    longitude: -74.0623
+  # Cajicá
+  "Cementerio de Cajicá":
+    latitude: 4.9224
+    longitude: -74.0362
+  "Planta Industrial Groupe SEB (Cajicá)":
+    latitude: 4.9322
+    longitude: -74.0226
+  # Zipaquirá
+  "Establecimiento Penitenciario de Zipaquirá (EPMSC)":
+    latitude: 5.0252
+    longitude: -74.0027
+  "Cementerio Municipal de Zipaquirá":
+    latitude: 5.0334
+    longitude: -74.0051
+  # Soacha
+  "Escombrera Municipal de Soacha":
+    latitude: 4.5572
+    longitude: -74.2190
+  "Cementerio de Soacha":
+    latitude: 4.5855
+    longitude: -74.2224
+  "Altos de Cazucá":
+    latitude: 4.5789
+    longitude: -74.1853

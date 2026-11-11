@@ -62,4 +62,9 @@ ignore-names = [
     "Z",
     "A1",
     "A2",
+    # PPCA matrices in utils/pca_plots.py and notebooks/pca_ppca.ipynb.
+    "W",
+    "C_ppca",
+    "M",
+    "Z_ppca",
     ]

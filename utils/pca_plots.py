@@ -276,3 +276,93 @@ def plot_loadings(
     plt.show()
 
     return loadings, (fig, axes)
+
+
+def plot_ppca_matrices(W, C_ppca, feature_names, figsize=(16, 6.5)):
+    """
+    Genera una figura con dos heatmaps del modelo PPCA: la matriz de cargas
+    probabilísticas W y la covarianza implícita del modelo
+    C = W Wᵀ + σ² I.
+
+    Parámetros:
+    -----------
+    W : array-like, forma (p, k)
+        Matriz de cargas probabilísticas (variables × componentes).
+    C_ppca : array-like, forma (p, p)
+        Covarianza del modelo PPCA.
+    feature_names : list or Index
+        Nombres de las p variables originales.
+    figsize : tuple, opcional (default: (16, 6.5))
+        Dimensiones de la figura.
+    """
+    # 1. Matrices etiquetadas (no se recalcula nada, solo se grafica)
+    W = np.asarray(W)
+    C_ppca = np.asarray(C_ppca)
+    names = [str(v) for v in feature_names]
+    pc_labels = [f"Fact_Lat{i + 1}" for i in range(W.shape[1])]
+    df_w = pd.DataFrame(W, index=names, columns=pc_labels)
+    df_c = pd.DataFrame(C_ppca, index=names, columns=names)
+
+    # 2. Construcción de la figura (tema y paletas del proyecto)
+    sns.set_theme(style="white", font="sans-serif")
+    cmap = sns.diverging_palette(15, 210, s=75, l=60, as_cmap=True)
+    fig, axes = plt.subplots(
+        1,
+        2,
+        figsize=figsize,
+        dpi=120,
+        gridspec_kw={"width_ratios": [W.shape[1] + 2, len(names) + 2]},
+    )
+    fig.suptitle(
+        "PPCA — Cargas Probabilísticas y Covarianza del Modelo",
+        fontsize=14,
+        fontweight="bold",
+        color="#1e293b",
+        x=0.02,
+        ha="left",
+    )
+
+    panels = [
+        (axes[0], df_w, "Cargas probabilísticas W"),
+        (axes[1], df_c, "Covarianza del modelo C = WWᵀ + σ²I"),
+    ]
+    for ax, matriz, titulo in panels:
+        # W no está acotada en [-1, 1]: escala simétrica según los datos
+        limite = float(np.abs(matriz.to_numpy()).max())
+        sns.heatmap(
+            matriz,
+            annot=True,
+            fmt=".2f",
+            cmap=cmap,
+            center=0,
+            vmin=-limite,
+            vmax=limite,
+            linewidths=1.5,
+            linecolor="white",
+            cbar=True,
+            cbar_kws={"shrink": 0.8},
+            annot_kws={"size": 8, "weight": "bold"},
+            ax=ax,
+        )
+        ax.set_title(
+            titulo,
+            fontsize=12,
+            fontweight="bold",
+            loc="left",
+            color="#1e293b",
+            pad=12,
+        )
+        ax.tick_params(axis="both", labelsize=9)
+
+    axes[0].tick_params(axis="x", rotation=0)
+    plt.setp(
+        axes[1].get_xticklabels(),
+        rotation=45,
+        ha="right",
+        rotation_mode="anchor",
+    )
+
+    plt.tight_layout()
+    plt.show()
+
+    return fig, axes

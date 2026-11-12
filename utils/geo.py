@@ -1,11 +1,10 @@
 """Geographic helpers for the FincaRaiz EDA."""
+
 from __future__ import annotations
-import numpy as np
-
-
 
 from typing import Any, NamedTuple
 
+import numpy as np
 import pandas as pd
 
 
@@ -98,6 +97,7 @@ def count_outside_bogota(
         "pct_outside": round(100 * outside / total, 2) if total else 0.0,
         "bbox": bbox,
     }
+
 
 def add_landmark_distances(
     df_houses: pd.DataFrame,
